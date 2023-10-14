@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Welcome to Your Homepage</h1>
-    <form id="encryptionForm" action="process_message.php" method="post">
+    <form id="encryptionForm" action="process.php" method="post">
         <h2>Select a User:</h2>
         <select id="userSelect" name="userSelect">
             <?php
