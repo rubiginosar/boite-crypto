@@ -1,7 +1,11 @@
 import sys
+import random
+import string
 def miroircry(message):
     if message == message[::-1]:
-        return "la chaine est palindrome impossible de chiffrer"
+        inv = message[::-1]
+        inv += random.choice(string.ascii_letters)
+        return "01" + inv
     else:
         inv = message[::-1]
         return "00" + inv
@@ -14,4 +18,4 @@ def miroirdecry(message):
 
 x=sys.argv[1]
 message=miroircry(x)
-print("00"+message) 
+print("000"+message) 
