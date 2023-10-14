@@ -16,6 +16,7 @@ def miroirdecry(message):
         inv = i + inv
     return inv
 
+
 x=sys.argv[1]
 message=miroircry(x)
 print("000"+message) 
