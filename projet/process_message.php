@@ -25,16 +25,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // Insert the message into the database (replace with your table and column names)
+        // If encryption type is "mirror," reverse the message using Python
+echo $messageContent;
+
+        // Insert the reversed message into the database (replace with your table and column names)
         $sql = "INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $loggedInUsername, $selectedUser, $messageContent);
 
-        if ($stmt->execute()) {
-            echo "Message sent successfully.";
-        } else {
-            echo "Error sending the message: " . $stmt->error;
-        }
+        // if ($stmt->execute()) {
+        //     echo "Message sent successfully.";
+        // } else {
+        //     echo "Error sending the message: " . $stmt->error;
+        // }
 
         $stmt->close();
         $conn->close();
