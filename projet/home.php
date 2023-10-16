@@ -6,6 +6,7 @@
 <body>
     <h1>Welcome to Your Homepage</h1>
     <form id="encryptionForm" action="process.php" method="post">
+        <!-- Select a User -->
         <h2>Select a User:</h2>
         <select id="userSelect" name="userSelect">
             <?php
@@ -21,7 +22,7 @@
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            // Retrieve users from the database
+            // Retrieve users from the database and populate the select dropdown
             $sql = "SELECT id, username FROM users";
             $result = $conn->query($sql);
 
@@ -33,6 +34,7 @@
             $conn->close();
             ?>
         </select>
+        <!-- Select Encryption Type -->
         <h1>Select Encryption Type:</h1>
         <select id="encryptionType" name="encryptionType" onchange="showInputFields()">
             <option value="shift">Shift</option>
@@ -40,38 +42,46 @@
             <option value="affine">Affine</option>
             <option value="caesar">Caesar</option>
         </select>
+        <!-- Shift Direction Input -->
         <div id="shiftDirection" style="display: none">
             <p>Choose Shift Direction:</p>
             <label for="shiftLeft">Left<input type="radio" id="shiftLeft" name="shiftDirection" value="left"></label>
             <label for="shiftRight">Right<input type="radio" id="shiftRight" name="shiftDirection" value="right"></label>
         </div>
+        <!-- Affine Keys Input -->
         <div id="affineKeys" style="display: none">
             <p>Enter Two Affine Keys:</p>
             <label for="keyA">Key A: <input type="text" id="keyA" name="keyA"></label>
             <label for="keyB">Key B: <input type="text" id="keyB" name="keyB"></label>
         </div>
+        <!-- Caesar Direction Input -->
         <div id="caesarDirection" style="display: none">
             <p>Choose Caesar Direction:</p>
             <label for="caesarEncrypt">Left<input type="radio" id="caesarEncrypt" name="caesarDirection" value="encrypt"></label>
-            <label for="caesarDecrypt">Right<input type="radio" id="caesarDecrypt" name="caesarDirection" value="decrypt"></label>
+            <label for "caesarDecrypt">Right<input type="radio" id="caesarDecrypt" name="caesarDirection" value="decrypt"></label>
             <p>Enter Caesar Key:</p>
             <input type="text" id="caesarKey" name="caesarKey">
         </div>
+        <!-- Compose Message Textarea -->
         <h2>Compose Message:</h2>
         <textarea id="messageContent" name="messageContent" rows="4" cols="50"></textarea>
+        <!-- Submit Button -->
         <button type="submit">Send Message</button>
     </form>
     <script>
+        // Function to show the input fields based on the selected encryption type
         function showInputFields() {
             const selectedEncryption = document.getElementById("encryptionType").value;
             const shiftDirection = document.getElementById("shiftDirection");
             const affineKeys = document.getElementById("affineKeys");
             const caesarDirection = document.getElementById("caesarDirection");
 
+            // Hide all input fields by default
             shiftDirection.style.display = "none";
             affineKeys.style.display = "none";
             caesarDirection.style.display = "none";
 
+            // Display the relevant input fields based on the selected encryption type
             if (selectedEncryption === "shift") {
                 shiftDirection.style.display = "block";
             } else if (selectedEncryption === "affine") {

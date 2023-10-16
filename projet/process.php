@@ -6,9 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $encryptionType = $_POST["encryptionType"];
     $messageContent = $_POST["messageContent"];
 
+    // Check if the user is logged in and the session has an authenticated username
     if (isset($_SESSION['authenticatedUsername'])) {
         $loggedInUsername = $_SESSION['authenticatedUsername'];
 
+        // Database connection setup (replace with your own database connection code)
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -20,8 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Connection failed: " . $conn->connect_error);
         }
 
+        // Handle the message encryption based on the selected encryption type
         if ($encryptionType === "mirror") {
-            // Define the shell command to call the Python script
+            // Define the shell command to call the Python script (replace with your script)
             $command = "python mirror.py " . escapeshellarg($messageContent);
 
             // Execute the command and capture the output
@@ -39,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sss", $loggedInUsername, $selectedUser, $reversed_message);
 
+            // Execute the SQL query to insert the message into the database
             if ($stmt->execute()) {
                 echo "Message sent successfully.";
             } else {
@@ -48,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: The Python script did not produce a valid message.";
         }
 
+        // Close the prepared statement and the database connection
         $stmt->close();
         $conn->close();
     } else {
@@ -56,5 +61,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "Form not submitted.";
 }
-
 ?>
