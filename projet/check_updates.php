@@ -1,27 +1,11 @@
 <?php
-
-// Database connection parameters
+// Database connection parameters (same as in dic.php)
 $hostname = 'localhost';
 $username = 'root';
 $password = '';
 $database = 'boite_crypto';
 
-// Open a connection to the database
-$mysqli = new mysqli($hostname, $username, $password, $database);
-
-// Check for a connection error
-if ($mysqli->connect_error) {
-    die("Database connection failed: " . $mysqli->connect_error);
-}
-
-// Set a maximum execution time for your script (in seconds)
-$maxExecutionTime = 55;  // Set a value that is slightly below the PHP max_execution_time
-
-// Get the start time
-$startTime = time();
-
-echo '<div id="output">'; // Start the output container
-
+// Your code for checking updates
 // Open the "mdp.txt" file for reading
 $file = fopen("mdp.txt", "r");
 
@@ -45,10 +29,24 @@ if ($file) {
         $matchStartTime = microtime(true);
 
         // Use a prepared statement to safely handle the password value
+        $mysqli = new mysqli($hostname, $username, $password, $database);
+        if ($mysqli->connect_error) {
+            die("Connection failed: " . $mysqli->connect_error);
+        }
+        
         $sql = "SELECT username, password FROM users WHERE password = ?";
         $stmt = $mysqli->prepare($sql);
+        
+        if ($stmt === false) {
+            die("Prepare failed: " . $mysqli->error);
+        }
+        
         $stmt->bind_param("s", $md5Password);
-        $stmt->execute();
+        
+        if ($stmt->execute() === false) {
+            die("Execute failed: " . $stmt->error);
+        }
+        
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
@@ -59,25 +57,16 @@ if ($file) {
             $matchEndTime = microtime(true);
             $matchTime = $matchEndTime - $matchStartTime;
             echo "Match Found ($matchCount): Username: $username, Password: $md5Password, Time Taken: $matchTime seconds<br>";
-            // Flush the output buffer to display immediately
-            ob_flush();
-            flush();
         }
+
+        // Close the database connection for this query
+        $stmt->close();
+        $mysqli->close();
     }
 
     // Close the file
     fclose($file);
 } else {
     echo "Failed to open the file.";
-}
-
-echo '</div>'; // End the output container
-
-// Close the database connection
-$mysqli->close();
-
-// If no matches were found
-if (!isset($username)) {
-    echo "None found.\n";
 }
 ?>

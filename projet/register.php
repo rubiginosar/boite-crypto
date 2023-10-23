@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
     
-    if (preg_match('/^[01]{3}$/', $password) || preg_match('/^[0-9]{5}$/', $password) || preg_match('/^[A-Za-z0-9+*...]{5}$/', $password)) {
+    if (preg_match('/^[01]{3}$/', $password) || preg_match('/^[0-9]{5}$/', $password) || preg_match('/^[A-Za-z0-9!@#$%^&*()-_+=]{5}$/', $password)) {
         // Check if the username is already in use
         $checkSql = "SELECT * FROM users WHERE username = '$username'";
         $checkResult = $conn->query($checkSql);
