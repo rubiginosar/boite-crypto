@@ -52,6 +52,22 @@ switch ($encryptionType) {
             exit(); // Exit to prevent saving an empty message
         }
         break;
+        case "shift":
+            // Récupérer la valeur (left ou right) depuis home.php
+         $shiftDirection = $_POST["shiftDirection"];
+         // Vérifier la direction du décalage
+         if ($shiftDirection === "left") {
+             $command = "python left.py " . escapeshellarg($messageContent);
+         } elseif ($shiftDirection === "right") {
+             $command = "python right.py " . escapeshellarg($messageContent);
+         } 
+         // Exécuter le script Python pour le décalage
+         $reversed_message = shell_exec($command);
+         if (trim($reversed_message) === "error") {
+             header("Location: home.php");
+             exit(); // Exit pour éviter d'enregistrer un message vide
+         }
+         break;
 }
 
 // Check if $reversed_message is not empty and not equal to an empty string
