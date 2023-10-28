@@ -1,59 +1,42 @@
 import sys
+def dechiffrement_affine(encrypted_message):
+    a = int(encrypted_message[0:2])
+    b = int(encrypted_message[2:4])
+    message = encrypted_message[4:]
 
-def miroirdecry(message):
-    if message.startswith("00"):
-        # Remove the leading "000" and reverse the rest
-        reversed_message = message[3:][::-1]
-        return reversed_message
-    elif message.startswith("00"):
-        # Remove the leading "001" and the last letter, then reverse the rest
-        modified_message = message[3:-1][::-1]
-        return modified_message
-    else:
-        return "Invalid format"
-
-
-    
-def saisie_entier_positif_strict(message):
-    while True:
-        try:
-            entier = int(input(message))
-            if entier > 0 and entier <= 25:
-                return entier
-            else:
-                print("Veuillez saisir un entier entre 1 et 25.")
-        except ValueError:
-            print("Veuillez saisir un entier valide.")
-
-def dechiffrement_affine(message_chiffre, a, b):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    message_dechiffre = ''
+    decrypted_message = ''
 
-    # Calcul de l'inverse de a modulo 26
-    a_inverse = None
-    for i in range(1, 26):
-        if (a * i) % 26 == 1:
-            a_inverse = i
-            break
-
-    if a_inverse is None:
-        a = saisie_entier_positif_strict("Entrez la valeur de a : ")
-
-    for lettre in message_chiffre:
+    for lettre in message:
         if lettre.lower() in alphabet:
             index = alphabet.index(lettre.lower())
-            lettre_dechiffree = alphabet[(a_inverse * (index - b)) % 26]
-            if lettre.isupper():
-                lettre_dechiffree = lettre_dechiffree.upper()
-            message_dechiffre += lettre_dechiffree
-        else:
-            message_dechiffre += lettre
-    return message_dechiffre
+            a_inverse = None
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python decrypt.py <message>")
-    else:
-        encrypted_message = sys.argv[1]
-        decrypted = miroirdecry(encrypted_message)
-        print(decrypted)
+            # Find the modular multiplicative inverse of 'a' (a^-1) modulo 26
+            for i in range(1, 26):
+                if (a * i) % 26 == 1:
+                    a_inverse = i
+                    break
+
+            if a_inverse is not None:
+                # Decrypt the letter
+                x = (a_inverse * (index - b)) % 26
+                if lettre.isupper():
+                    decrypted_letter = alphabet[x].upper()
+                else:
+                    decrypted_letter = alphabet[x]
+                decrypted_message += decrypted_letter
+            else:
+                # If 'a' doesn't have an inverse, return an error message
+                return "Error: 'a' does not have an inverse modulo 26"
+        else:
+            # Non-alphabet characters are not modified
+            decrypted_message += lettre
+
+    return decrypted_message
+
+# Example usage:
+encrypted_message =sys.argv[1] # Replace with your encrypted message
+decrypted_message = dechiffrement_affine(encrypted_message)
+print(decrypted_message)
+

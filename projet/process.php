@@ -71,11 +71,12 @@ switch ($encryptionType) {
 }
 
 // Check if $reversed_message is not empty and not equal to an empty string
+// Check if $reversed_message is not empty and not equal to an empty string
 if (!empty($reversed_message) && trim($reversed_message) !== "") {
     // Proceed with saving the message
-    $sql = "INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO messages (sender, receiver, message, A, B) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $loggedInUsername, $selectedUser, $reversed_message);
+    $stmt->bind_param("sssss", $loggedInUsername, $selectedUser, $reversed_message, $keyA, $keyB);
 
     // Execute the SQL query to insert the message into the database
     if ($stmt->execute()) {
@@ -88,6 +89,7 @@ if (!empty($reversed_message) && trim($reversed_message) !== "") {
     header("Location: home.php");
     // Optionally, you can display an error message to the user if needed
 }
+
 
 // ...
 

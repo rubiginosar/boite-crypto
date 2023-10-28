@@ -40,7 +40,7 @@ def dechiffrement_affine(message_chiffre, a, b):
             break
 
     if a_inverse is None:
-        a = int(sys.argv[1])  # Read a from command-line argument
+        a = int(sys.argv[1])  # Read a from the command-line argument
 
     for lettre in message_chiffre:
         if lettre.lower() in alphabet:
@@ -69,4 +69,7 @@ message = sys.argv[3]
 
 # Chiffrement du message
 message_chiffre = chiffrement_affine(message, a, b)
-print("00"+message_chiffre)
+
+# Print the encrypted message with a and b occupying two positions each
+formatted_message = "{:02d}{:02d}".format(a, b) + message_chiffre
+print(formatted_message)
