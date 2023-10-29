@@ -22,18 +22,3 @@ for i in x:
                     f.write(motdepasse)
                     f.write("\n")
                     f.close()
-# 5 caractere a..z A..Z 0..9 et tous les caractères spéciaux
-import random
-import string
-char=[]
-char=string.ascii_letters + string.digits + string.punctuation
-for i in char:
-    for k in char:
-        for j in char:
-            for l in char:
-                for n in char:
-                    motdepasse= str(i)+str(j)+str(k)+str(l)+str(n)
-                    f=open("mdp.txt","a")
-                    f.write(motdepasse)
-                    f.write("\n")
-                    f.close()

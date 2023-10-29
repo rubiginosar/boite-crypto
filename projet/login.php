@@ -2,22 +2,30 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="post" action="login.php">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <input type="submit" value="Login">
-    </form>
-    <div id="registration-container">
-        <form action="register.php" method="post">
-            <input type="submit" value="Register">
+<img src="./Res/fond.jpg" alt="" class="fond" />
+    <div class="center">
+        <h1>Login</h1>
+        <form method="post" action="login.php">
+            <div class="txt_field">
+                <span></span>
+                <input type="text" id="username" name="username" required><br>
+                <label for="username">Username:</label>
+            </div>
+            <div class="txt_field">
+                <span></span>
+                <input type="password" id="password" name="password" required><br>
+                <label for="password">Password:</label>
+            </div>
+            <input type="submit" value="Login">
         </form>
+        <div id="registration-container">
+            <form action="./register.php" method="post" >
+                <input type="submit" value="Register">
+            </form>
+        </div>
     </div>
 </body>
 </html>
@@ -52,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['authenticatedUsername'] = $username;
 
             // Redirect to the home page upon successful login
-            header("Location: home.php");
+            header("Location: mailbox.php");
             exit();
         } else {
             // User doesn't exist, display an error message or redirect to the registration page

@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Registration</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Registration</h2>
@@ -33,16 +34,35 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Function to count the number of users
+function countUsers($conn) {
+    $countSql = "SELECT COUNT(*) as user_count FROM users";
+    $countResult = $conn->query($countSql);
+
+    if ($countResult && $countResult->num_rows > 0) {
+        $row = $countResult->fetch_assoc();
+        return $row['user_count'];
+    }
+
+    return 0;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $confirm_password = $_POST["confirm_password"];
-    
-    if (preg_match('/^[01]{3}$/', $password) || preg_match('/^[0-9]{5}$/', $password) || preg_match('/^[A-Za-z0-9!@#$%^&*()-_+=]{5}$/', $password)) {
+    // Check if the maximum user limit (7) is reached
+    $maxUsers = 7;
+    $userCount = countUsers($conn);
+
+    if ($userCount >= $maxUsers) {
+        echo "Maximum user limit reached. Registration is not allowed.";
+    } else {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        $confirm_password = $_POST["confirm_password"];
+
         // Check if the username is already in use
         $checkSql = "SELECT * FROM users WHERE username = '$username'";
         $checkResult = $conn->query($checkSql);
-    
+
         if ($checkResult->num_rows > 0) {
             // Display an error message if the username is already in use
             echo "Username is already in use. Please choose another.";
@@ -64,11 +84,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Error: " . $insertSql . "<br>" . $conn->error;
             }
         }
-    } else {
-        echo "Invalid password. Password should meet the criteria.";
     }
-    
-    // Close the database connection
-    $conn->close();
 }
+
+// Close the database connection
+$conn->close();
 ?>

@@ -22,53 +22,68 @@ $startTime = time();
 
 echo '<div id="output">'; // Start the output container
 
-// Open the "mdp.txt" file for reading
-$file = fopen("mdp.txt", "r");
+// Define a variable to indicate the type of attack (dictionary or brute force)
+$attackType = '';
 
-if ($file) {
-    $matchCount = 0;
-
-    // Loop through each line in the password file
-    while (($md5Password = fgets($file)) !== false) {
-        // Remove newline characters if present
-        $md5Password = trim($md5Password);
-
-        // Check the remaining execution time
-        $remainingTime = $maxExecutionTime - (time() - $startTime);
-
-        // If there's not enough remaining time, exit the script
-        if ($remainingTime < 5) {  // Set a safe margin for exiting (e.g., 5 seconds)
-            break;
-        }
-
-        // Start the timer for this match
-        $matchStartTime = microtime(true);
-
-        // Use a prepared statement to safely handle the password value
-        $sql = "SELECT username, password FROM users WHERE password = ?";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("s", $md5Password);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            // Password match found
-            $matchCount++;
-            $row = $result->fetch_assoc();
-            $username = $row["username"];
-            $matchEndTime = microtime(true);
-            $matchTime = $matchEndTime - $matchStartTime;
-            echo "Match Found ($matchCount): Username: $username, Password: $md5Password, Time Taken: $matchTime seconds<br>";
-            // Flush the output buffer to display immediately
-            ob_flush();
-            flush();
-        }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if either button is clicked
+    if (isset($_POST["dictionaryAttack"])) {
+        $attackType = "dictionary";
+    } elseif (isset($_POST["bruteForceAttack"])) {
+        $attackType = "bruteforce";
     }
+}
 
-    // Close the file
-    fclose($file);
-} else {
-    echo "Failed to open the file.";
+// Check the type of attack and execute the appropriate logic
+if ($attackType === "dictionary" || $attackType === "bruteforce") {
+    // Open the "mdp.txt" file for reading
+    $file = fopen("mdp.txt", "r");
+
+    if ($file) {
+        $matchCount = 0;
+
+        // Loop through each line in the password file
+        while (($md5Password = fgets($file)) !== false) {
+            // Remove newline characters if present
+            $md5Password = trim($md5Password);
+
+            // Check the remaining execution time
+            $remainingTime = $maxExecutionTime - (time() - $startTime);
+
+            // If there's not enough remaining time, exit the script
+            if ($remainingTime < 5) {  // Set a safe margin for exiting (e.g., 5 seconds)
+                break;
+            }
+
+            // Start the timer for this match
+            $matchStartTime = microtime(true);
+
+            // Use a prepared statement to safely handle the password value
+            $sql = "SELECT username, password FROM users WHERE password = ?";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("s", $md5Password);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                // Password match found
+                $matchCount++;
+                $row = $result->fetch_assoc();
+                $username = $row["username"];
+                $matchEndTime = microtime(true);
+                $matchTime = $matchEndTime - $matchStartTime;
+                echo "Match Found ($matchCount): Username: $username, Password: $md5Password, Time Taken: $matchTime seconds<br>";
+                // Flush the output buffer to display immediately
+                ob_flush();
+                flush();
+            }
+        }
+
+        // Close the file
+        fclose($file);
+    } else {
+        echo "Failed to open the file.";
+    }
 }
 
 echo '</div>'; // End the output container
@@ -81,3 +96,8 @@ if (!isset($username)) {
     echo "None found.\n";
 }
 ?>
+
+<form method="post">
+    <button type="submit" name="dictionaryAttack">Attack by Dictionary</button>
+    <button type="submit" name="bruteForceAttack">Attack by Brute Force</button>
+</form>

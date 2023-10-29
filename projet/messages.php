@@ -98,6 +98,7 @@
             <li><a href="./mailbox.php">Home</a></li>
             <li><a href="./home.php">Send Message</a></li>
             <li><a href="./messages.php">Receive Message</a></li>
+            <li><a href="./dic.php">Attack</a></li>
             <li><a href="./logout.html">Logout</a></li>
         </ul>
     </nav>

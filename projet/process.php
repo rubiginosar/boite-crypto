@@ -5,6 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $selectedUser = $_POST["userSelect"];
     $encryptionType = $_POST["encryptionType"];
     $messageContent = $_POST["messageContent"];
+    $keyA="";
+    $keyB= "";
 
     // Check if the user is logged in and the session has an authenticated username
     if (isset($_SESSION['authenticatedUsername'])) {

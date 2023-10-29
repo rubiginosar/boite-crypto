@@ -60,7 +60,7 @@ def est_premier_entre_eux(a, b):
 a = int(sys.argv[1])
 b = int(sys.argv[2])
 
-if a <= 0 or b <= 0 or not est_premier_entre_eux(a, 26):
+if a <= 0 and b <= 0 or not est_premier_entre_eux(a, 26):
     print("error")
     sys.exit(1)
 
