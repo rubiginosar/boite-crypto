@@ -18,4 +18,4 @@ x = sys.argv[1]
 message = left_shift(x)
 
 
-print(message)
+print("L_"+message)

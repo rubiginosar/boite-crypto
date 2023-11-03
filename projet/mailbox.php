@@ -92,7 +92,7 @@
           <li><a href="./home.php">Send Message</a></li>
           <li><a href="./messages.php">Receive Message</a></li>
           <li><a href="./dic.php">Attack</a></li>
-          <li><a href="./logout.html">Logout</a></li>
+          <li><a href="./logout.php">Logout</a></li>
         </ul>
       </nav>
     </header>

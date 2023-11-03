@@ -99,7 +99,7 @@
             <li><a href="./home.php">Send Message</a></li>
             <li><a href="./messages.php">Receive Message</a></li>
             <li><a href="./dic.php">Attack</a></li>
-            <li><a href="./logout.html">Logout</a></li>
+            <li><a href="./logout.php">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -148,66 +148,104 @@
         <input type="submit" name="decryptButton" value="Decrypt">
     </form>
     <?php
-    // Check if the Decrypt button is clicked
-if (isset($_POST['decryptButton'])) {
-    $selectedMessage = $_POST['messageSelect'];
-    $selectedMethod = $_POST['decryptionMethod'];
+$decryptedMessage = ""; // Initialize the variable
 
-    // Database connection setup (replace with your own database connection code)
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "boite_crypto";
+session_start();
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// Database connection setup (replace with your own database connection code)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "boite_crypto";
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Retrieve the keys 'A' and 'B' associated with the selected message from the database
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    // Implement your decryption logic here based on the chosen method
-    switch ($selectedMethod) {
-        case "shift Left":
-            $command = "python right.py " . escapeshellarg($selectedMessage);
-            // Capture the output of the Python script
-            $decryptedMessage = shell_exec($command);
-            break;
-        case "shift Right":
-            $command = "python left.py " . escapeshellarg($selectedMessage);
-            // Capture the output of the Python script
-            $decryptedMessage = shell_exec($command);
-            break;
-        case "mirror":
-            // Execute the Python script for decryption
-            $command = "python mirror.py " . escapeshellarg($selectedMessage);
-            // Capture the output of the Python script
-            $decryptedMessage = shell_exec($command);
-            break;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['decryptButton'])) {
+        $selectedMessage = $_POST['messageSelect'];
+        $selectedMethod = $_POST['decryptionMethod'];
+
+        // Database connection setup (replace with your own database connection code)
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "boite_crypto";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Initialize a flag to track if the message format is correct
+        $validMessageFormat = false;
+
+        // Implement your decryption logic here based on the chosen method
+        switch ($selectedMethod) {
+            case "shift Left":
+                if (strpos($selectedMessage, "L_") === 0) {
+                    $validMessageFormat = true;
+                    // Remove the "L_" prefix
+                    $selectedMessage = substr($selectedMessage, 2);
+                    $command = "python left.py " . escapeshellarg($selectedMessage);
+                    // Capture the output of the Python script
+                    $decryptedMessage = shell_exec($command);
+                }
+                break;
+            case "shift Right":
+                if (strpos($selectedMessage, "R_") === 0) {
+                    $validMessageFormat = true;
+                    // Remove the "R_" prefix
+                    $selectedMessage = substr($selectedMessage, 2);
+                    $command = "python right.py " . escapeshellarg($selectedMessage);
+                    // Capture the output of the Python script
+                    $decryptedMessage = shell_exec($command);
+                }
+                break;
+                case "mirror":
+                    $validMessageFormat = true;
+                    $command = "python mirror.py " . escapeshellarg($selectedMessage);
+                    // Capture the output of the Python script
+                    $decryptedMessage = shell_exec($command);
+                    break;                           
             case "affine":
-              $command = "python decrypt.py " . escapeshellarg($selectedMessage);
-              // Capture the output of the Python script
-              $decryptedMessage = shell_exec($command);
-              break;
-        case "caesar":
-            // Implement your caesar decryption logic here
-            break;
-        default:
-            // Handle an unsupported or invalid method
-            $decryptedMessage = "Invalid decryption method selected";
-    }
+                if (strpos($selectedMessage, "A_") === 0) {
+                    $validMessageFormat = true;
+                    // Remove the "A_" prefix
+                    $selectedMessage = substr($selectedMessage, 2);
+                    $command = "python decrypt.py " . escapeshellarg($selectedMessage);
+                    // Capture the output of the Python script
+                    $decryptedMessage = shell_exec($command);
+                }
+                break;
+            case "caesar":
+                if (strpos($selectedMessage, "C_") === 0) {
+                    $validMessageFormat = true;
+                    // Remove the "C_" prefix
+                    $selectedMessage = substr($selectedMessage, 2);
+                    // Implement your caesar decryption logic here
+                }
+                break;
+            default: 
+                $decryptedMessage = "Invalid decryption method selected";
+        }
 
-    // Display the decrypted message (or an empty string if not decrypted)
-    $decryptedMessage = isset($decryptedMessage) ? $decryptedMessage : "";
+        // Display the decrypted message (or an empty string if not decrypted)
+        $decryptedMessage = isset($decryptedMessage) ? $decryptedMessage : "";
 
-    // Close the database connection
-    if (isset($stmt)) {
-        $stmt->close();
+        // Close the database connection
+        if (isset($stmt)) {
+            $stmt->close();
+        }
+        $conn->close();
     }
-    $conn->close();
 }
 ?>
+
 
 
     <!-- Display the decrypted message -->

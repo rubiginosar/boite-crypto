@@ -72,4 +72,4 @@ message_chiffre = chiffrement_affine(message, a, b)
 
 # Print the encrypted message with a and b occupying two positions each
 formatted_message = "{:02d}{:02d}".format(a, b) + message_chiffre
-print(formatted_message)
+print("A_"+formatted_message)

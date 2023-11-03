@@ -49,22 +49,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["username"]) && isset($_POST["password"])) {
         // Get the username and password from the login form
         $username = $_POST["username"];
-        $password = $_POST["password"];
+        $enteredPassword = $_POST["password"];
 
         // Check if the user exists in the database
-        $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT * FROM users WHERE username = '$username'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-            // User exists, so store the username in a session variable
-            $_SESSION['authenticatedUsername'] = $username;
+            $row = $result->fetch_assoc();
+            $hashedPassword = $row["password"];
 
-            // Redirect to the home page upon successful login
-            header("Location: mailbox.php");
-            exit();
+            // Verify the entered password against the hashed password in the database
+            if (password_verify($enteredPassword, $hashedPassword)) {
+                // Passwords match, so store the username in a session variable
+                $_SESSION['authenticatedUsername'] = $username;
+
+                // Redirect to the home page upon successful login
+                header("Location: mailbox.php");
+                exit();
+            } else {
+                // Passwords don't match, display an error message
+                echo "Invalid password. Please try again.";
+            }
         } else {
             // User doesn't exist, display an error message or redirect to the registration page
-            echo "Invalid username or password. Please register or try again.";
+            echo "Invalid username. Please register or try again.";
         }
     }
 }

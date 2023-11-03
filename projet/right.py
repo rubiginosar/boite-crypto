@@ -17,4 +17,4 @@ x = sys.argv[1]
 message = right_shift(x)
 
 
-print(message)
+print("R_"+message)

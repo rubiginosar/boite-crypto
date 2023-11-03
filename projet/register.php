@@ -47,6 +47,8 @@ function countUsers($conn) {
     return 0;
 }
 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the maximum user limit (7) is reached
     $maxUsers = 7;
@@ -70,8 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Display an error message if passwords do not match
             echo "Passwords do not match. Please try again.";
         } else {
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
             // Insert the new user into the database
-            $insertSql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+            $insertSql = "INSERT INTO users (username, password) VALUES ('$username', '$hashedPassword')";
             
             // Check if the user was successfully inserted
             if ($conn->query($insertSql) === TRUE) {
@@ -86,6 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
 
 // Close the database connection
 $conn->close();
