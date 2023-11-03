@@ -191,9 +191,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $validMessageFormat = true;
                     // Remove the "L_" prefix
                     $selectedMessage = substr($selectedMessage, 2);
-                    $command = "python left.py " . escapeshellarg($selectedMessage);
+                    $command = "python right.py " . escapeshellarg($selectedMessage);
                     // Capture the output of the Python script
                     $decryptedMessage = shell_exec($command);
+                    if ($decryptedMessage !== null) {
+                        $decryptedMessage = substr($decryptedMessage, 2);
+                    }
                 }
                 break;
             case "shift Right":
@@ -201,9 +204,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $validMessageFormat = true;
                     // Remove the "R_" prefix
                     $selectedMessage = substr($selectedMessage, 2);
-                    $command = "python right.py " . escapeshellarg($selectedMessage);
+                    $command = "python left.py " . escapeshellarg($selectedMessage);
                     // Capture the output of the Python script
                     $decryptedMessage = shell_exec($command);
+                    if ($decryptedMessage !== null) {
+                        $decryptedMessage = substr($decryptedMessage, 2);
+                    }
                 }
                 break;
                 case "mirror":
