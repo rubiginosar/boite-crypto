@@ -136,6 +136,7 @@ if ($attackType === "dictionary" || $attackType === "bruteforce") {
 
     if ($file) {
         $matchCount = 0;
+        $matchFound = false; // Flag to indicate if any match is found
 
         // Loop through each line in the password file
         while (($md5Password = fgets($file)) !== false) {
@@ -163,6 +164,7 @@ if ($attackType === "dictionary" || $attackType === "bruteforce") {
             if ($result->num_rows > 0) {
                 // Password match found
                 $matchCount++;
+                $matchFound = true; // Set the flag to true
                 $row = $result->fetch_assoc();
                 $username = $row["username"];
                 $matchEndTime = microtime(true);
@@ -176,6 +178,11 @@ if ($attackType === "dictionary" || $attackType === "bruteforce") {
 
         // Close the file
         fclose($file);
+
+        // If no match was found, print "No match found"
+        if (!$matchFound) {
+            echo "No match found, try attacking by brute force \n";
+        }
     } else {
         echo "Failed to open the file.";
     }

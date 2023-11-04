@@ -150,7 +150,7 @@
     <?php
 $decryptedMessage = ""; // Initialize the variable
 
-session_start();
+//session_start();
 
 // Database connection setup (replace with your own database connection code)
 $servername = "localhost";
