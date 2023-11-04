@@ -5,18 +5,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Registration</h2>
-    <form method="post" action="register.php">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required><br>
-
-        <input type="submit" value="Register">
-    </form>
+<div alt="" class="fond" >
+    <div class="center">
+        <h1>Registration</h1>
+            <form method="post" action="register.php">
+            <div class="txt_field">
+                <span></span>
+                <input type="text" id="username" name="username" required><br>
+                <label for="username">Username:</label>
+            </div>
+            <div class="txt_field">
+                <span></span>
+                <input type="password" id="password" name="password" required><br>
+                <label for="password">Password:</label>
+            </div>
+            <div class="txt_field">
+                <span></span>
+                <input type="password" id="confirm_password" name="confirm_password" required><br>
+                <label for="confirm_password">Confirm Password:</label>
+            </div>
+                <input type="submit" value="Register">
+            </form>
+    </div>  
+</div>  
 </body>
 </html>
 
@@ -82,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($conn->query($insertSql) === TRUE) {
                 // Registration successful; redirect to the home page
                 echo "Registration successful!";
-                header("Location: home.php");
+                header("Location: mailbox.php");
                 exit();
             } else {
                 // Display an error message if there was a database error

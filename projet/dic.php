@@ -27,6 +27,8 @@
         list-style: none;
         padding: 0;
         position: sticky;
+        display:flex;
+        justify-content:space-around;
       }
 
       nav ul li {
@@ -38,45 +40,33 @@
         text-decoration: none;
         color: #fff;
       }
-      section {
-        background-color: #fff;
-        margin: 20px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
+      nav ul li a:hover {
+            text-decoration: none;
+            color: #2980b9;
+        }
+      nav ul li a:focus {
+            text-decoration: none;
+            color: #8e44ad;
+        }
+      form {
+        display:flex;
+        justify-content:space-around;
+        }
+      .submit {
+          font-size:20px;
+          padding: 10px 10px; /* Adjust padding as needed */
+          background-color: #2980b9;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top:50px;
+        }
 
-      h1 {
-        font-size: 24px;
-        margin: 0 0 10px 0;
-      }
-
-      label {
-        display: block;
-        font-weight: bold;
-      }
-
-      input[type="text"],
-      textarea {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-
-      input[type="submit"] {
-        background-color: #333;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      input[type="submit"]:hover {
-        background-color: #555;
-      }
+/* Style the submit button on hover/focus */
+.submit:hover, .submit-button:focus {
+  background-color: #8e44ad;
+}
     </style>
 </head>
 <body>
@@ -193,6 +183,6 @@ if (!isset($username)) {
 ?>
 
 <form method="post">
-    <button type="submit" name="dictionaryAttack">Attack by Dictionary</button>
-    <button type="submit" name="bruteForceAttack">Attack by Brute Force</button>
+    <button type="submit" name="dictionaryAttack" class="submit">Attack by Dictionary</button>
+    <button type="submit" name="bruteForceAttack" class="submit">Attack by Brute Force</button>
 </form>

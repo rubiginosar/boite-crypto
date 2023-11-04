@@ -33,6 +33,47 @@ body,
   padding: 40px;
   box-sizing: border-box;
 }
+/* Style the select container */
+/*.select-cont {
+  position: relative;
+  width: 200px; /* Adjust the width as needed 
+}*/
+
+/* Style the select element */
+.slct {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #2980b9;
+  background-color: #2980b9;
+  color: #fff;
+  border-radius: 5px;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Style the select arrow */
+.slct::after {
+  content: "\25BC"; /* Down arrow character */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #8e44ad;
+}
+
+/* Style select options */
+.slct option {
+  background-color: #fff;
+  color: #2980b9;
+}
+
+/* Style select on hover/focus */
+.slct:hover,
+.select-element:focus {
+  background-color: #8e44ad;
+  border-color: #8e44ad;
+}
+
 form .txt_field {
   position: relative;
   border-bottom: 2px solid #adadad;

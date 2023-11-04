@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<img src="./Res/fond.jpg" alt="" class="fond" />
+<div  alt="" class="fond" >
     <div class="center">
         <h1>Login</h1>
         <form method="post" action="login.php">
@@ -27,6 +27,7 @@
             </form>
         </div>
     </div>
+</div>   
 </body>
 </html>
 

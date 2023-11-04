@@ -31,6 +31,8 @@
         list-style: none;
         padding: 0;
         position: sticky;
+        display:flex;
+        justify-content:space-around;
       }
 
       nav ul li {
@@ -42,45 +44,54 @@
         text-decoration: none;
         color: #fff;
       }
-
+      nav ul li a:hover {
+            text-decoration: none;
+            color: #2980b9;
+        }
+      nav ul li a:focus {
+            text-decoration: none;
+            color: #8e44ad;
+        }
       section {
         background-color: #fff;
-        margin: 20px;
+        margin: 5px;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
-      }
-
-      h1 {
-        font-size: 24px;
-        margin: 0 0 10px 0;
-      }
-
-      label {
-        display: block;
-        font-weight: bold;
-      }
-
-      input[type="text"],
-      textarea {
+        background: linear-gradient(120deg, #2980b9, #8e44ad);
+        overflow: hidden;
         width: 100%;
-        padding: 10px;
-        margin: 5px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
       }
-
-      input[type="submit"] {
-        background-color: #333;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+      span {
+        text-transform: uppercase;
+        display: block;
+        text-align:center;
       }
-
-      input[type="submit"]:hover {
-        background-color: #555;
+      .text1 {
+        color: black;
+        font-size:60px;
+        font-weight:700;
+        letter-spacing:8px;
+        animation: text 3s 1;
+        position: relative;
+      }
+      .text2 {
+        font-size:40px;
+        position: relative;
+      }
+      @keyframes text {
+        0%{color:black;
+          margin-bottom:-40px;
+        }
+        30%{
+          letter-spacing:25px;
+          margin-bottom:-40px; 
+        }
+        85%{
+          letter-spacing:8px;
+          margin-bottom:-40px;
+        }
+        
       }
     </style>
   </head>
@@ -97,7 +108,8 @@
       </nav>
     </header>
     <section id="welcome">
-      <h1>Welcome to Your Mailbox</h1>
+      <span class="text1">Welcome to Your </span>
+      <span class="text2">CRYPTOBOX</span>
     </section>
   </body>
 </html>

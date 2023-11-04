@@ -25,11 +25,13 @@
             padding: 10px;
             z-index: 100;
         }
-
+        
         nav ul {
             list-style: none;
             padding: 0;
             position: sticky;
+            display:flex;
+            justify-content:space-around;
         }
 
         nav ul li {
@@ -40,6 +42,14 @@
         nav ul li a {
             text-decoration: none;
             color: #fff;
+        }
+        nav ul li a:hover {
+            text-decoration: none;
+            color: #2980b9;
+        }
+        nav ul li a:focus {
+            text-decoration: none;
+            color: #8e44ad;
         }
 
         section {
@@ -77,18 +87,56 @@
             border-radius: 5px;
         }
 
-        input[type="submit"] {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
 
-        input[type="submit"]:hover {
-            background-color: #555;
-        }
+        
+      .slct {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #2980b9;
+  background-color: #2980b9;
+  color: #fff;
+  border-radius: 5px;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Style the select arrow */
+.slct::after {
+  content: "\25BC"; /* Down arrow character */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #8e44ad;
+}
+
+/* Style select options */
+.slct option {
+  background-color: #fff;
+  color: #2980b9;
+}
+
+/* Style select on hover/focus */
+.slct:hover,
+.select-element:focus {
+  background-color: #8e44ad;
+  border-color: #8e44ad;
+}
+      /* Style the submit button */
+.submit {
+  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top:50px;
+}
+
+/* Style the submit button on hover/focus */
+.submit:hover, .submit-button:focus {
+  background-color: #8e44ad;
+}
     </style>
 </head>
 <body>
@@ -108,7 +156,7 @@
     <form method="POST">
         <!-- Select a message to decrypt -->
         <label for="messageSelect">Select a Message to Decrypt:</label>
-        <select id="messageSelect" name="messageSelect">
+        <select id="messageSelect" name="messageSelect" class="slct">
             <?php
             // Database connection setup (replace with your own database connection code)
             $servername = "localhost";
@@ -136,7 +184,7 @@
         </select>
         <!-- Select decryption method -->
         <label for="decryptionMethod">Select Decryption Method:</label>
-        <select id="decryptionMethod" name="decryptionMethod">
+        <select id="decryptionMethod" name="decryptionMethod" class="slct">
             <option value="shift Left">Shift Left</option>
             <option value="shift Right">Shift Right</option>
             <option value="mirror">Mirror</option>
@@ -145,12 +193,12 @@
         </select>
 
         <!-- Decrypt button -->
-        <input type="submit" name="decryptButton" value="Decrypt">
+        <input type="submit" name="decryptButton" value="Decrypt" class="submit">
     </form>
     <?php
 $decryptedMessage = ""; // Initialize the variable
 
-session_start();
+//session_start();
 
 // Database connection setup (replace with your own database connection code)
 $servername = "localhost";
