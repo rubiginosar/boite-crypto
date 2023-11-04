@@ -27,6 +27,8 @@
         list-style: none;
         padding: 0;
         position: sticky;
+        display:flex;
+        justify-content:space-around;
       }
 
       nav ul li {
@@ -38,6 +40,14 @@
         text-decoration: none;
         color: #fff;
       }
+      nav ul li a:hover {
+            text-decoration: none;
+            color: #2980b9;
+        }
+      nav ul li a:focus {
+            text-decoration: none;
+            color: #8e44ad;
+        }
       section {
         background-color: #fff;
         margin: 20px;
@@ -50,6 +60,39 @@
         font-size: 24px;
         margin: 0 0 10px 0;
       }
+      .slct {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #2980b9;
+  background-color: #2980b9;
+  color: #fff;
+  border-radius: 5px;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Style the select arrow */
+.slct::after {
+  content: "\25BC"; /* Down arrow character */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #8e44ad;
+}
+
+/* Style select options */
+.slct option {
+  background-color: #fff;
+  color: #2980b9;
+}
+
+/* Style select on hover/focus */
+.slct:hover,
+.select-element:focus {
+  background-color: #8e44ad;
+  border-color: #8e44ad;
+}
 
       label {
         display: block;
@@ -77,6 +120,21 @@
       input[type="submit"]:hover {
         background-color: #555;
       }
+      /* Style the submit button */
+.submit {
+  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style the submit button on hover/focus */
+.submit:hover, .submit-button:focus {
+  background-color: #8e44ad;
+}
+
     </style>
 </head>
 <body>
@@ -95,7 +153,7 @@
     <form id="encryptionForm" action="process.php" method="post">
         <!-- Select a User -->
         <label for="userSelect">Select a User:</label>
-        <select id="userSelect" name="userSelect">
+        <select id="userSelect" name="userSelect" class="slct">
             <?php
             // Database connection setup (replace with your own database connection code)
             $servername = "localhost";
@@ -123,7 +181,7 @@
         </select>
         <!-- Select Encryption Type -->
         <h1>Select Encryption Type:</h1>
-        <select id="encryptionType" name="encryptionType" onchange="showInputFields()">
+        <select id="encryptionType" name="encryptionType" onchange="showInputFields()" class="slct">
             <option value="shift">Shift</option>
             <option value="mirror">Mirror</option>
             <option value="affine">Affine</option>
@@ -153,7 +211,7 @@
         <h2>Compose Message:</h2>
         <textarea id="messageContent" name="messageContent" rows="4" cols="50"></textarea>
         <!-- Submit Button -->
-        <button type="submit">Send Message</button>
+        <button type="submit" class="submit">Send Message</button>
     </form>
     <script>
         // Function to show the input fields based on the selected encryption type
