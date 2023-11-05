@@ -85,33 +85,33 @@
 </html>
 <?php
 
-// Database connection parameters
+// Paramètres de connexion à la base de données
 $hostname = 'localhost';
 $username = 'root';
 $password = '';
 $database = 'boite_crypto';
 
-// Open a connection to the database
+// Ouvre une connexion à la base de données
 $mysqli = new mysqli($hostname, $username, $password, $database);
 
-// Check for a connection error
+// Vérifie s'il y a une erreur de connexion
 if ($mysqli->connect_error) {
-    die("Database connection failed: " . $mysqli->connect_error);
+    die("Échec de la connexion à la base de données : " . $mysqli->connect_error);
 }
 
-// Set a maximum execution time for your script (in seconds)
-$maxExecutionTime = 55;  // Set a value that is slightly below the PHP max_execution_time
+// Définit un temps d'exécution maximum pour votre script (en secondes)
+$maxExecutionTime = 55;  // Définit une valeur légèrement inférieure à max_execution_time de PHP
 
-// Get the start time
+// Obtient l'heure de début
 $startTime = time();
 
-echo '<div id="output">'; // Start the output container
+echo '<div id="output">'; // Débute le conteneur de sortie
 
-// Define a variable to indicate the type of attack (dictionary or brute force)
+// Définit une variable pour indiquer le type d'attaque (dictionnaire ou force brute)
 $attackType = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if either button is clicked
+    // Vérifie si l'un des boutons a été cliqué
     if (isset($_POST["dictionaryAttack"])) {
         $attackType = "dictionary";
     } elseif (isset($_POST["bruteForceAttack"])) {
@@ -119,32 +119,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Check the type of attack and execute the appropriate logic
+// Vérifie le type d'attaque et exécute la logique appropriée
 if ($attackType === "dictionary" || $attackType === "bruteforce") {
-    // Open the "mdp.txt" file for reading
+    // Ouvre le fichier "mdp.txt" en lecture
     $file = fopen("mdp.txt", "r");
 
     if ($file) {
         $matchCount = 0;
-        $matchFound = false; // Flag to indicate if any match is found
+        $matchFound = false; // Indicateur pour indiquer si une correspondance a été trouvée
 
-        // Loop through each line in the password file
+        // Parcourt chaque ligne du fichier de mots de passe
         while (($md5Password = fgets($file)) !== false) {
-            // Remove newline characters if present
+            // Supprime les caractères de nouvelle ligne s'ils sont présents
             $md5Password = trim($md5Password);
 
-            // Check the remaining execution time
+            // Vérifie le temps d'exécution restant
             $remainingTime = $maxExecutionTime - (time() - $startTime);
 
-            // If there's not enough remaining time, exit the script
-            if ($remainingTime < 5) {  // Set a safe margin for exiting (e.g., 5 seconds)
+            // S'il ne reste pas suffisamment de temps, quitte le script
+            if ($remainingTime < 5) {  // Définit une marge de sécurité pour la sortie (par exemple, 5 secondes)
                 break;
             }
 
-            // Start the timer for this match
+            // Démarre le chronomètre pour cette correspondance
             $matchStartTime = microtime(true);
 
-            // Use a prepared statement to safely handle the password value
+            // Utilise une instruction préparée pour gérer en toute sécurité la valeur du mot de passe
             $sql = "SELECT username, password FROM users WHERE password = ?";
             $stmt = $mysqli->prepare($sql);
             $stmt->bind_param("s", $md5Password);
@@ -152,24 +152,24 @@ if ($attackType === "dictionary" || $attackType === "bruteforce") {
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // Password match found
+                // Correspondance de mot de passe trouvée
                 $matchCount++;
-                $matchFound = true; // Set the flag to true
+                $matchFound = true; // Définit le drapeau sur vrai
                 $row = $result->fetch_assoc();
                 $username = $row["username"];
                 $matchEndTime = microtime(true);
                 $matchTime = $matchEndTime - $matchStartTime;
                 echo "Match Found ($matchCount): Username: $username, Password: $md5Password, Time Taken: $matchTime seconds<br>";
-                // Flush the output buffer to display immediately
+                // Vide le tampon de sortie pour l'affichage immédiat
                 ob_flush();
                 flush();
             }
         }
 
-        // Close the file
+        // Ferme le fichier
         fclose($file);
 
-        // If no match was found, print "No match found"
+        // Si aucune correspondance n'a été trouvée, affiche "Aucune correspondance trouvée"
         if (!$matchFound) {
             echo "No match found, try attacking by brute force \n";
         }
@@ -178,15 +178,17 @@ if ($attackType === "dictionary" || $attackType === "bruteforce") {
     }
 }
 
-echo '</div>'; // End the output container
+echo '</div>'; // Termine le conteneur de sortie
 
-// Close the database connection
+// Ferme la connexion à la base de données
 $mysqli->close();
 
-// If no matches were found
+// Si aucun nom d'utilisateur n'a été défini
 if (!isset($username)) {
     echo "None found.\n";
 }
+?>
+
 ?>
 
 <form method="post">
