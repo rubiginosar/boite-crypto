@@ -1,11 +1,15 @@
 import math
 import sys
 
+# Définition de la fonction pgcd (Plus Grand Commun Diviseur)
 def pgcd(a, b):
     while b != 0:
         a, b = b, a % b
     return a
 
+# Cette fonction calcule le PGCD (Plus Grand Commun Diviseur) de deux nombres a et b en utilisant l'algorithme d'Euclide.
+
+# Définition de la fonction est_premier pour vérifier si un nombre est premier
 def est_premier(n):
     if n < 2:
         return False
@@ -14,6 +18,9 @@ def est_premier(n):
             return False
     return True
 
+# Cette fonction vérifie si un nombre n est premier. Elle retourne True si n est premier, sinon False.
+
+# Définition de la fonction chiffrement_affine pour chiffrer un message
 def chiffrement_affine(message, a, b):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     message_chiffre = ''
@@ -28,6 +35,9 @@ def chiffrement_affine(message, a, b):
             message_chiffre += lettre
     return message_chiffre
 
+# Cette fonction chiffre un message en utilisant le chiffrement affine. Elle prend en compte chaque lettre du message et applique la transformation affine.
+
+# Définition de la fonction dechiffrement_affine pour déchiffrer un message
 def dechiffrement_affine(message_chiffre, a, b):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     message_dechiffre = ''
@@ -40,7 +50,7 @@ def dechiffrement_affine(message_chiffre, a, b):
             break
 
     if a_inverse is None:
-        a = int(sys.argv[1])  # Read a from the command-line argument
+        a = int(sys.argv[1])  # Lire la valeur de a à partir de l'argument en ligne de commande
 
     for lettre in message_chiffre:
         if lettre.lower() in alphabet:
@@ -53,23 +63,28 @@ def dechiffrement_affine(message_chiffre, a, b):
             message_dechiffre += lettre
     return message_dechiffre
 
+# Cette fonction déchiffre un message chiffré en utilisant le chiffrement affine. Elle utilise l'inverse de a pour inverser la transformation et retrouver le message original.
+
+# Définition de la fonction est_premier_entre_eux pour vérifier si deux nombres sont premiers entre eux
 def est_premier_entre_eux(a, b):
     return math.gcd(a, b) == 1
 
-# Read values of a and b from command-line arguments
+# Cette fonction vérifie si deux nombres a et b sont premiers entre eux
+# Lire les valeurs de a et b à partir des arguments en ligne de commande
 a = int(sys.argv[1])
 b = int(sys.argv[2])
 
+# Vérifier si a et b sont des entiers positifs et premiers entre eux avec 26
 if a <= 0 and b <= 0 or not est_premier_entre_eux(a, 26):
     print("error")
     sys.exit(1)
 
-# Read the message from command-line argument
+# Lire le message à partir de l'argument en ligne de commande
 message = sys.argv[3]
 
-# Chiffrement du message
+# Chiffrer le message
 message_chiffre = chiffrement_affine(message, a, b)
 
-# Print the encrypted message with a and b occupying two positions each
+# Formater le message chiffré avec a et b occupant deux positions chacun
 formatted_message = "{:02d}{:02d}".format(a, b) + message_chiffre
 print("A_"+formatted_message)

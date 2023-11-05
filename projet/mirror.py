@@ -8,40 +8,40 @@
 #             inv = "00"+message[::-1]
 #     return inv    #return "00" + inv
 #method2 : we fix the char at the middle and we reverse before/after that
-# Import the sys module to access command-line arguments
+# Importez le module sys pour gérer les arguments en ligne de commande
 import sys
 
-# Define a function called 'mirror' that takes a string 's' as input
+# Définissez une fonction appelée 'mirror' qui prend une chaîne de caractères 's' en entrée
 def mirror(s):
-    # Initialize an empty string 'inv' to store the mirrored string
+    # Initialisez une chaîne vide 'inv' pour stocker la chaîne miroir
     inv = ""
 
-    # Iterate over the characters in the input string 's' in reverse order
+    # Parcourez les caractères de la chaîne d'entrée 's' en ordre inverse
     for i in range(len(s)):
-        inv += s[len(s) - 1 - i]
+        inv += s[len(s) - 1 - i]  # Ajoutez les caractères à 'inv' dans l'ordre inverse
 
-    # Check if the input string is a palindrome
+    # Vérifiez si la chaîne d'entrée est un palindrome en la comparant à sa version inversée
     if s == inv:
-        # If it's a palindrome, initialize an empty string 'inv1' for the mirrored result
-        inv1 = mirror(s[0:int(len(s) / 2)])  # Recursively mirror the first half
+        # Si c'est un palindrome, initialisez une chaîne vide 'inv1' pour le résultat miroir
+        inv1 = mirror(s[0:int(len(s) / 2)])  # Inversez récursivement la première moitié
 
-        # Check if the length of the input string is odd
+        # Vérifiez si la longueur de la chaîne d'entrée est impaire
         if len(s) % 2 == 1:
-            inv1 += s[int(len(s) / 2)] + s[0:int(len(s) / 2)]  # Concatenate the middle character
+            inv1 += s[int(len(s) / 2)] + s[0:int(len(s) / 2)]  # Concaténez le caractère central
         else:
-            inv1 += s[0:int(len(s) / 2)]  # For even-length palindromes, no middle character is added
+            inv1 += s[0:int(len(s) / 2)]  # Pour les palindromes de longueur paire, aucun caractère central n'est ajouté
 
-        # Update 'inv' with the mirrored result of the first half
+        # Mettez à jour 'inv' avec le résultat miroir de la première moitié
         inv = inv1
 
-    # Return the mirrored string 'inv'
+    # Renvoyez la chaîne miroir 'inv'
     return inv
 
-# Retrieve the input string from command-line arguments
+# Récupérez la chaîne d'entrée à partir des arguments en ligne de commande
 x = sys.argv[1]
 
-# Call the 'mirror' function to mirror the input string
+# Appelez la fonction 'mirror' pour inverser la chaîne d'entrée
 message = mirror(x)
 
-# Print the mirrored message
+# Affichez le message inversé
 print(message)

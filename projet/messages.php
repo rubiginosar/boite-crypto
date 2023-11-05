@@ -217,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $selectedMessage = $_POST['messageSelect'];
         $selectedMethod = $_POST['decryptionMethod'];
 
-        // Database connection setup (replace with your own database connection code)
+        // Database connection setup 
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -232,7 +232,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Initialize a flag to track if the message format is correct
         $validMessageFormat = false;
 
-        // Implement your decryption logic here based on the chosen method
         switch ($selectedMethod) {
             case "shift Left":
                 if (strpos($selectedMessage, "L_") === 0) {
