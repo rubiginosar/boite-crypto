@@ -24,7 +24,7 @@ if (isset($_POST['attackButton'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attaque de Mot de passe</title>
+    <title>Attack of passwords</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap");
       body {
@@ -173,43 +173,43 @@ if (isset($_POST['attackButton'])) {
       </nav>
     </header>
     <section>
-    <h1>Attaque de Mot de passe</h1>
+    <h1>Attack of passwords</h1>
     <form id="passwordForm" method="post">
-        <label for="passwordType">Choisissez le type de mot de passe:</label>
+        <label for="passwordType">Choose the type of password:</label>
         <select id="passwordType" name="passwordType" onchange="checkPassword()" class="slct">
-            <option value="3caracteres">Mot de passe de 3 caractères (0, 1)</option>
-            <option value="5chiffres">Mot de passe de 5 chiffres (0..9)</option>
-            <option value="5caracteres">Mot de passe de 5 caractères (a..z, A..Z, 0..9, +, *, ...)</option>
+            <option value="3caracteres">Password of 3 caracteres (0, 1)</option>
+            <option value="5chiffres">Password of 5 caracteres (0..9)</option>
+            <option value="5caracteres">Password of 5 caracteres (a..z, A..Z, 0..9, +, *, ...)</option>
         </select>
         <br>
 
-        <label for="password">Entrez le mot de passe:</label>
+        <label for="password">Enter the password:</label>
         <input type="text" id="password" name="password" oninput="checkPassword()">
         <br>
 
         <p id="error-message" style="color: red"><?php echo $errorMessage; ?></p>
 
-        <button type="submit" name="attackButton" class="submit">Attaquer</button>
+        <button type="submit" name="attackButton" class="submit">Attack</button>
     </form>
     <hr>
-    <h2>Resultat:</h2>
+    <h2>Result:</h2>
     <?php
         if (isset($_POST['attackButton'])) {
             if ($selectedPasswordType === '3caracteres') {
                 $command = "python type1.py " . escapeshellarg($passwordInput);
                 $reversed_message = shell_exec($command);
                 // Exécutez l'attaque pour le mot de passe de 3 caractères ici
-                echo 'Lancement de l\'attaque pour le mot de passe de 3 caracteres. Resultat : ' . $reversed_message;
+                echo 'Launch of an attack <Password of 3 caracteres>. <br> ' . $reversed_message;
             } elseif ($selectedPasswordType === '5chiffres') {
                 $command = "python type2.py " . escapeshellarg($passwordInput);
                 $reversed_message = shell_exec($command);
                 // Exécutez l'attaque pour le mot de passe de 5 chiffres ici
-                echo 'Lancement de l\'attaque pour le mot de passe de 5 chiffres.'. $reversed_message;
+                echo 'Launch of an attack <Password of 5 caracteres>.'. $reversed_message;
             } elseif ($selectedPasswordType === '5caracteres') {
                 $command = "python type3.py " . escapeshellarg($passwordInput);
                 $reversed_message = shell_exec($command);
                 // Exécutez l'attaque pour le mot de passe de 5 caractères spéciaux ici
-                echo 'Lancement de l\'attaque pour le mot de passe de 5 caracteres speciaux.'. $reversed_message ;
+                echo 'Launch of an attack <Password of 5 special caracteres>.'. $reversed_message ;
             }
         }
         ?>
