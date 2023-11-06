@@ -277,10 +277,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break;
             case "caesar":
                 if (strpos($selectedMessage, "C_") === 0) {
-                    $validMessageFormat = true;
+                  $validMessageFormat = true;
                     // Remove the "C_" prefix
                     $selectedMessage = substr($selectedMessage, 2);
+                    $command = "python dcaesar.py " . escapeshellarg($selectedMessage);
+                    // Capture the output of the Python script
+                    $decryptedMessage = shell_exec($command);
                     // Implement your caesar decryption logic here
+              //  }
                 }
                 break;
             default: 

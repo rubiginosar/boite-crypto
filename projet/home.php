@@ -203,7 +203,7 @@
         <div id="caesarDirection" style="display: none">
             <p>Choose Caesar Direction:</p>
             <label for="caesarEncrypt">Left<input type="radio" id="caesarEncrypt" name="caesarDirection" value="encrypt"></label>
-            <label for "caesarDecrypt">Right<input type="radio" id="caesarDecrypt" name="caesarDirection" value="decrypt"></label>
+            <label for="caesarDecrypt">Right<input type="radio" id="caesarDecrypt" name="caesarDirection" value="decrypt"></label>
             <p>Enter Caesar Key:</p>
             <input type="text" id="caesarKey" name="caesarKey">
         </div>

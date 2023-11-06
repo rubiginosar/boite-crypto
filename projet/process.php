@@ -62,6 +62,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit(); // Sortir pour éviter de sauvegarder un message vide
                 }
                 break;
+                case "caesar":
+                    // Récupérer la valeur (left ou right) depuis home.php
+                    $caesarDirection = $_POST["caesarDirection"];
+                    $caesarKey = $_POST["caesarKey"];
+                    // Vérifier la direction du décalage
+                    $command = "python caesar.py " . escapeshellarg($caesarKey). " " . escapeshellarg($caesarDirection) . " " . escapeshellarg($messageContent);
+                    // Exécuter le script Python pour le décalage
+                    $reversed_message = shell_exec($command);
+        
+                    if (trim($reversed_message) === "error") {
+                        header("Location: home.php");
+                        exit(); // Exit pour éviter d'enregistrer un message vide
+                    }   
+                    break;
         }
 
         // Vérifier si $reversed_message n'est pas vide
