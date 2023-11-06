@@ -195,6 +195,7 @@
         <!-- Decrypt button -->
         <input type="submit" name="decryptButton" value="Decrypt" class="submit">
     </form>
+    <hr>
     <?php
 $decryptedMessage = ""; // Initialize the variable
 
@@ -308,6 +309,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Display the decrypted message -->
     <h2>Decrypted Message:</h2>
     <p><?php echo $decryptedMessage; ?></p>
+    
+    <hr>
 </section>
 </body>
 </html>
