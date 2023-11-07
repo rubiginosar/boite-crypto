@@ -147,6 +147,7 @@
             <li><a href="./home.php">Send Message</a></li>
             <li><a href="./messages.php">Receive Message</a></li>
             <li><a href="./dic.php">Attack</a></li>
+            <li><a href="./att.php">Password</a></li>
             <li><a href="./stegano.php">Steganographie</a></li>
             <li><a href="./logout.php">Logout</a></li>
         </ul>
