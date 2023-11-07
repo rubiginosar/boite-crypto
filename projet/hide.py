@@ -98,7 +98,7 @@ def hide(message, image_name):
 
     # Génère un nom de fichier unique avec un horodatage
     timestamp = int(time.time())
-    output_path = "C:/Users/THINKPAD T470/Desktop/uploads/secret_{}.png".format(timestamp)
+    output_path = "C:/Users/user/Desktop/uploads/secret_{}.png".format(timestamp)
 
     # Crée une nouvelle image à partir des données modifiées et la sauvegarde
     image_final = Image.fromarray(data)
