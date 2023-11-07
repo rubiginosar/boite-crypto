@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Vérifie le type d'attaque et exécute la logique appropriée
-if ($attackType === "dictionary" || $attackType === "bruteforce") {
+if ($attackType === "dictionary" ) {
     // Ouvre le fichier "mdp.txt" en lecture
     $file = fopen("mdp.txt", "r");
 
@@ -179,7 +179,9 @@ if ($attackType === "dictionary" || $attackType === "bruteforce") {
         echo "Failed to open the file.";
     }
 }
-
+else { if ($attackType === "bruteforce")
+  header("Location: att.php");
+}
 echo '</div>'; // Termine le conteneur de sortie
 
 // Ferme la connexion à la base de données
