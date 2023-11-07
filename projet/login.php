@@ -67,13 +67,31 @@ if (count($_POST) > 0) {
     <link rel="stylesheet" href="style.css"> <!-- Include your CSS file here -->
 </head>
 <body>
-    <h1>Login</h1>
+<div alt="" class="fond" >
+    <div class="center">
+        <h1>Login</h1>
+        <form method="post" action="login.php">
+            <div class="txt_field">
+                <span></span>
+                <input type="text" id="username" name="username" required><br>
+                <label for="username">Username:</label>
+            </div>
+            <div class="txt_field">
+                <span></span>
+                <input type="password" id="password" name="password" required><br>
+                <label for="password">Password:</label>
+            </div>
+            <input type="submit" value="Login">
+        </form>
+        <div id="registration-container">
+            <form action="./register.php" method="post" >
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </div>  
+</div>  
+    
 
-    <form method="post">
-        <input type="text" name="username" placeholder="Username"><br>
-        <input type="password" name="password" placeholder="Password"><br><br>
-        <button type="submit">Login</button>
-        <button type="submit" name="register" value="1">Register</button> <!-- Register button -->
-    </form>
+    
 </body>
 </html>
