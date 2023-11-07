@@ -180,7 +180,7 @@ if ($attackType === "dictionary" ) {
     }
 }
 else { if ($attackType === "bruteforce")
-  header("Location: att.php");
+  header("Location: brute.php");
 }
 echo '</div>'; // Termine le conteneur de sortie
 
