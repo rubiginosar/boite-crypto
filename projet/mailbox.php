@@ -1,3 +1,9 @@
+<?php 
+
+require("ban.php");
+check_if_banned();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
